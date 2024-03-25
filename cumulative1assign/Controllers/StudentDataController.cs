@@ -1,14 +1,15 @@
 ﻿using cumulative1assign.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
 
 namespace cumulative1assign.Controllers
 {
-    public class SudentDataController : Controller
+    public class StudentDataController : ApiController
     {
         private SchoolDbContext School = new SchoolDbContext();
 
@@ -17,19 +18,19 @@ namespace cumulative1assign.Controllers
         public IEnumerable<Student> ListStudents()
         {
             //Create an instance of a connection
-            SqlConnection Conn = School.AccessDatabase();
+            MySqlConnection Conn = School.AccessDatabase();
 
             //Open the connection between the web server and database
             Conn.Open();
 
             //Establish a new command (query) for our database
-            SqlCommand cmd = Conn.CreateCommand();
+            MySqlCommand cmd = Conn.CreateCommand();
 
             //SQL QUERY
             cmd.CommandText = "Select * from Students";
 
             //Gather Result Set of Query into a variable
-            SqlDataReader ResultSet = cmd.ExecuteReader();
+            MySqlDataReader ResultSet = cmd.ExecuteReader();
 
             //Create an empty list of Students
             List<Student> Students = new List<Student> { };
@@ -38,7 +39,8 @@ namespace cumulative1assign.Controllers
             while (ResultSet.Read())
             {
                 //Access Column information by the DB column name as an index
-                int StudentId = (int)ResultSet["studentid"];
+
+                int StudentId = Convert.ToInt32(ResultSet["studentid"]);
                 string StudentFname = ResultSet["studentfname"].ToString();
                 string StudentLname = ResultSet["studentlname"].ToString();
                 string StudentNumber = ResultSet["studentnumber"].ToString();
@@ -79,26 +81,26 @@ namespace cumulative1assign.Controllers
             Student NewStudent = new Student();
 
             //Create an instance of a connection
-            SqlConnection Conn = School.AccessDatabase();
+            MySqlConnection Conn = School.AccessDatabase();
 
             //Open the connection between the web server and database
             Conn.Open();
 
             //Establish a new command (query) for our database
-            SqlCommand cmd = Conn.CreateCommand();
+            MySqlCommand cmd = Conn.CreateCommand();
 
             //SQL QUERY
-            cmd.CommandText = "Select * from Students where teacherid = @id";
+            cmd.CommandText = "Select * from Students where studentid = @id";
             cmd.Parameters.AddWithValue("@id", id);
             cmd.Prepare();
 
             //Gather Result Set of Query into a variable
-            SqlDataReader ResultSet = cmd.ExecuteReader();
+            MySqlDataReader ResultSet = cmd.ExecuteReader();
 
             while (ResultSet.Read())
             {
                 //Access Column information by the DB column name as an index
-                int StudentId = (int)ResultSet["studentid"];
+                int StudentId = Convert.ToInt32(ResultSet["studentid"]);
                 string StudentFname = ResultSet["studentfname"].ToString();
                 string StudentLname = ResultSet["studentlname"].ToString();
                 string StudentNumber = ResultSet["studentnumber"].ToString();

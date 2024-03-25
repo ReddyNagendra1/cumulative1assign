@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using MySql.Data.MySqlClient;
 
 namespace cumulative1assign.Models
 {
@@ -13,9 +13,9 @@ namespace cumulative1assign.Models
         //Change these to match your own local blog database!
         private static string User { get { return "root"; } }
         private static string Password { get { return "root"; } }
-        private static string Database { get { return "schooldb"; } }
+        private static string Database { get { return "school"; } }
         private static string Server { get { return "localhost"; } }
-        private static string Port { get { return "3307"; } }
+        private static string Port { get { return "3306"; } }
 
         //ConnectionString is a series of credentials used to connect to the database.
         protected static string ConnectionString
@@ -41,11 +41,11 @@ namespace cumulative1assign.Models
         /// MySqlConnection Conn = Blog.AccessDatabase();
         /// </example>
         /// <returns>A MySqlConnection Object</returns>
-        public SqlConnection AccessDatabase()
+        public MySqlConnection AccessDatabase()
         {
             //We are instantiating the MySqlConnection Class to create an object
             //the object is a specific connection to our blog database on port 3307 of localhost
-            return new SqlConnection(ConnectionString);
+            return new MySqlConnection(ConnectionString);
         }
     }
 }

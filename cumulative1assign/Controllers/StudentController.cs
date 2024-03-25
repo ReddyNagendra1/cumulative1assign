@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using cumulative1assign.Models;
 
 namespace cumulative1assign.Controllers
 {

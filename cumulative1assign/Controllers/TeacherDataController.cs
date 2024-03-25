@@ -1,11 +1,11 @@
-﻿using cumulative1assign.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using cumulative1assign.Models;
 
 namespace cumulative1assign.Controllers
 {
@@ -25,19 +25,19 @@ namespace cumulative1assign.Controllers
         public IEnumerable<Teacher> ListTeachers()
         {
             //Create an instance of a connection
-           SqlConnection Conn = School.AccessDatabase();
+           MySqlConnection Conn = School.AccessDatabase();
 
             //Open the connection between the web server and database
             Conn.Open();
 
             //Establish a new command (query) for our database
-            SqlCommand cmd = Conn.CreateCommand();
+            MySqlCommand cmd = Conn.CreateCommand();
 
             //SQL QUERY
             cmd.CommandText = "Select * from Teachers";
 
             //Gather Result Set of Query into a variable
-            SqlDataReader ResultSet = cmd.ExecuteReader();
+            MySqlDataReader ResultSet = cmd.ExecuteReader();
 
             //Create an empty list of Teachers
             List<Teacher> Teachers = new List<Teacher> { };
@@ -87,13 +87,13 @@ namespace cumulative1assign.Controllers
             Teacher NewTeacher = new Teacher();
 
             //Create an instance of a connection
-            SqlConnection Conn = School.AccessDatabase();
+            MySqlConnection Conn = School.AccessDatabase();
 
             //Open the connection between the web server and database
             Conn.Open();
 
             //Establish a new command (query) for our database
-            SqlCommand cmd = Conn.CreateCommand();
+            MySqlCommand cmd = Conn.CreateCommand();
 
             //SQL QUERY
             cmd.CommandText = "Select * from Teachers where teacherid = @id";
@@ -101,7 +101,7 @@ namespace cumulative1assign.Controllers
             cmd.Prepare();
 
             //Gather Result Set of Query into a variable
-            SqlDataReader ResultSet = cmd.ExecuteReader();
+            MySqlDataReader ResultSet = cmd.ExecuteReader();
 
             while (ResultSet.Read())
             {
