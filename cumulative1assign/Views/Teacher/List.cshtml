@@ -3,16 +3,29 @@
     ViewBag.Title = "List";
 }
 
-<h2>list</h2>
 
-<p>This page should be showing information about all teachers</p>
 
+    <h2>List</h2>
+    <p>This page would be showing the information about all teachers</p>
 <div id="containerlist">
-    <h2>List of Teachers</h2>
+    <nav>
+        <a class="btn btn-default" href="/Teacher/New">New Teacher</a>
+    </nav>
+
+    <form method="GET">
+        <h3>Search by using the teachers first name</h3>
+        <input type="text" name="SearchKey" />
+        <input type="submit" value="Search" />
+    </form>
+
     @foreach (var teacher in Model)
     {
-        <div class="listitem row">
-            <div class="col-md-12"><a href="/Teacher/Show/@teacher.TeacherId">@teacher.TeacherFname @teacher.TeacherLname @teacher.EmployeeNumber @teacher.HireDate @teacher.Salary</a></div>
+
+        <div>
+            <a href="/Teacher/Show/@teacher.TeacherId">
+                @teacher.TeacherFname @teacher.TeacherLname
+            </a>
         </div>
+
     }
 </div>
