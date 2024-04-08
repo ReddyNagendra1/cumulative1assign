@@ -40,8 +40,9 @@ namespace cumulative1assign.Controllers
 
             //SQL QUERY
             //cmd.CommandText = "Select * from Teachers";
-            cmd.CommandText = "Select * from Teachers where teacherfname like '%" + SearchKey + "%' or teacherlname like '%" + SearchKey + "%' ";
-            // Select* from Teachers where lower(teacherfname) like lower(@key) or lower(teacherlname) like lower(@key) or lower(concat(teacherfname, ' ', teacherlname)) like lower(@key)
+            cmd.CommandText = "Select * from Teachers where lower(teacherfname) like lower (@key) or lower(teacherlname) like lower(@key) or lower(concat(teacherfname, ' ',teacherlname)) like lower(@key)";
+            cmd.Parameters.AddWithValue("@key", "%" + SearchKey + "%");
+            cmd.Prepare();
 
             //Gather Result Set of Query into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();
@@ -58,7 +59,7 @@ namespace cumulative1assign.Controllers
                 string TeacherLname = ResultSet["teacherlname"].ToString();
                 string EmployeeNumber = ResultSet["employeenumber"].ToString();
                 DateTime HireDate = Convert.ToDateTime(ResultSet["hiredate"]);
-                //string Salary = ResultSet["salary"].ToString();
+               string Salary = ResultSet["salary"].ToString();
 
                 Teacher NewTeacher = new Teacher();
                 NewTeacher.TeacherId = TeacherId;
@@ -66,7 +67,7 @@ namespace cumulative1assign.Controllers
                 NewTeacher.TeacherLname = TeacherLname;
                 NewTeacher.EmployeeNumber = EmployeeNumber;
                 NewTeacher.HireDate = HireDate;
-                //NewTeacher.Salary = Salary;
+                NewTeacher.Salary = Salary;
 
                 //Add the Teacher Name to the list
                 Teachers.Add(NewTeacher);
@@ -119,14 +120,14 @@ namespace cumulative1assign.Controllers
                 string TeacherLname = ResultSet["teacherlname"].ToString();
                 string EmployeeNumber = ResultSet["employeenumber"].ToString();
                 DateTime HireDate = Convert.ToDateTime(ResultSet["hiredate"]);
-                //string Salary = ResultSet["salary"].ToString();
+                string Salary = ResultSet["salary"].ToString();
 
                 NewTeacher.TeacherId = TeacherId;
                 NewTeacher.TeacherFname = TeacherFname;
                 NewTeacher.TeacherLname = TeacherLname;
                 NewTeacher.EmployeeNumber = EmployeeNumber;
                 NewTeacher.HireDate = HireDate;
-                //NewTeacher.Salary = Salary;
+                NewTeacher.Salary = Salary;
             }
             Conn.Close();
 

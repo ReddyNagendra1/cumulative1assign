@@ -74,7 +74,7 @@ namespace cumulative1assign.Controllers
             NewTeacher.TeacherFname = TeacherFname;
             NewTeacher.TeacherLname = TeacherLname;
             NewTeacher.EmployeeNumber = EmployeeNumber;
-            //NewTeacher.Salary = Salary;
+            NewTeacher.Salary = Salary;
 
             TeacherDataController controller = new TeacherDataController();
             controller.AddTeacher(NewTeacher);

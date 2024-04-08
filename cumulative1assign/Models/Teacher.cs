@@ -13,7 +13,7 @@ namespace cumulative1assign.Models
         public string TeacherLname;
         public string EmployeeNumber;
         public DateTime HireDate;
-        public decimal Salary;
+        public string Salary;
 
         //parameter-less constructor function
 
