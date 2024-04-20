@@ -58,8 +58,8 @@ namespace cumulative1assign.Controllers
                 string TeacherFname = ResultSet["teacherfname"].ToString();
                 string TeacherLname = ResultSet["teacherlname"].ToString();
                 string EmployeeNumber = ResultSet["employeenumber"].ToString();
-                DateTime HireDate = Convert.ToDateTime(ResultSet["hiredate"]);
-               string Salary = ResultSet["salary"].ToString();
+                string HireDate = ResultSet["hiredate"].ToString();
+                string Salary = ResultSet["salary"].ToString();
 
                 Teacher NewTeacher = new Teacher();
                 NewTeacher.TeacherId = TeacherId;
@@ -119,7 +119,7 @@ namespace cumulative1assign.Controllers
                 string TeacherFname = ResultSet["teacherfname"].ToString();
                 string TeacherLname = ResultSet["teacherlname"].ToString();
                 string EmployeeNumber = ResultSet["employeenumber"].ToString();
-                DateTime HireDate = Convert.ToDateTime(ResultSet["hiredate"]);
+                string HireDate = ResultSet["hiredate"].ToString();
                 string Salary = ResultSet["salary"].ToString();
 
                 NewTeacher.TeacherId = TeacherId;
@@ -208,7 +208,49 @@ namespace cumulative1assign.Controllers
             Conn.Close();
         }
 
+        /// <summary>
+        /// Update a teacher in the system
+        /// </summary>
+        /// <param name="teacherid"></param>
+        /// <param name="UpdateTeacher"></param>
+        /// <example>
+        /// POST:api/teacherdata/updateteacher/105/mmmnff
+        /// POST DATA / FORM DATA / REQUEST BODY
+        /// {
+        /// teacherid: 5,
+        /// teacherfname: 'John',
+        /// teacherlname: 'Wick'
+        /// }
+       
+        /// </example>
+        [HttpPost]
+        [Route("api/teacherdata/updateteacher/{id}")]
+        public void UpdateTeacher(int id, [FromBody] Teacher UpdateTeacher)
+        {
+            //Create an instance of a connection
+            MySqlConnection Connection = School.AccessDatabase();
 
+            //Open the connection between the web server and database
+            Connection.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand Cmd = Connection.CreateCommand();
+
+            //SQL QUERY
+            Cmd.CommandText = " Update teachers set teacherfname=@TeacherFname,teacherlname=@TeacherLname,employeenumber=@EmployeeNumber,salary=@Salary where teacherid =@id ";
+
+  
+            Cmd.Parameters.AddWithValue("@TeacherFname", UpdateTeacher.TeacherFname);
+            Cmd.Parameters.AddWithValue("@TeacherLname", UpdateTeacher.TeacherLname);
+            Cmd.Parameters.AddWithValue("@EmployeeNumber", UpdateTeacher.EmployeeNumber);
+            Cmd.Parameters.AddWithValue("@Salary", UpdateTeacher.Salary);
+            Cmd.Parameters.AddWithValue("@id", id);
+            Cmd.Prepare();
+
+            Cmd.ExecuteNonQuery();
+
+            Connection.Close();
+        }
 
 
     }

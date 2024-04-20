@@ -7,15 +7,13 @@ namespace cumulative1assign.Models
 {
     public class Teacher
     {
-        //The following properties define an Author
+        //The following properties define an Teacher
         public int TeacherId;
         public string TeacherFname;
         public string TeacherLname;
         public string EmployeeNumber;
-        public DateTime HireDate;
+        public string HireDate;
         public string Salary;
-
-        //parameter-less constructor function
 
         public Teacher() { }
     }
